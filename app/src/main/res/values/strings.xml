@@ -1,0 +1,30 @@
+<resources>
+    <string name="app_name">CA103_Android</string>
+
+    <string name="text_Home">Home</string>
+    <string name="text_News">News</string>
+    <string name="text_Map">Map</string>
+    <string name="text_Settings">Settings</string>
+
+    <string name="text_UserName">David Wu</string>
+    <string name="text_Email">thisisfake@gmail.com</string>
+
+    <string name="text_Open">Open</string>
+    <string name="text_Close">Close</string>
+
+    <!-- login activity-->
+    <string name="text_btnNewAccount">Create a new account</string>
+    <string name="text_btnLogin">Login</string>
+    <string name="hint_etUser">User name</string>
+    <string name="hint_etPassword">password</string>
+    <string name="hint_etUrl">Server URL</string>
+
+    <!--error messages-->
+    <string name="msg_InvalidUserOrPassword">Invalid user name or password</string>
+    <string name="msg_NoNetwork">No network connection available</string>
+
+    <!--button text-->
+    <string name="text_btnCollect">收藏</string>
+    <string name="text_btnComment">留言</string>
+    <string name="card_btnMargin">20dp</string>
+</resources>
