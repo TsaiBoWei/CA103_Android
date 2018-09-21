@@ -27,4 +27,10 @@
     <string name="text_btnCollect">收藏</string>
     <string name="text_btnComment">留言</string>
     <string name="card_btnMargin">20dp</string>
+
+    <!--bottom navbar menu texts-->
+    <string name="text_bottom_navbar_item_home">首頁</string>
+    <string name="text_bottom_navbar_item_plan">計畫</string>
+    <string name="text_bottom_navbar_item_event">活動</string>
+    <string name="text_bottom_navbar_item_course">課程</string>
 </resources>
