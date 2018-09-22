@@ -10,10 +10,13 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 
+import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.ca103.idv.ca103_android.R;
 import com.ca103.idv.ca103_android.main.Util;
 import com.ca103.idv.ca103_android.main.task.*;
+
+import java.io.Console;
 
 public class LoginActivity extends AppCompatActivity {
     private static final String TAG = "LoginActivity";
@@ -33,9 +36,10 @@ public class LoginActivity extends AppCompatActivity {
         super.onStart();
         SharedPreferences preferences = getSharedPreferences(Util.PREF_FILE,
                 MODE_PRIVATE);
-        boolean login = preferences.getBoolean("login", false);
+        boolean login = false;
+                //preferences.getBoolean("login", false);
         if (login) {
-            String userId = preferences.getString("userId", "");
+            String userId = preferences.getString("account", "");
             String password = preferences.getString("password", "");
             if (isMember(userId, password)) {
                 setResult(RESULT_OK);
@@ -62,7 +66,7 @@ public class LoginActivity extends AppCompatActivity {
             SharedPreferences preferences = getSharedPreferences(
                     Util.PREF_FILE, MODE_PRIVATE);
             preferences.edit().putBoolean("login", true)
-                    .putString("userId", userId)
+                    .putString("account", userId)
                     .putString("password", password).apply();
             setResult(RESULT_OK);
             finish();
@@ -71,27 +75,44 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-    private boolean isMember(final String userId, final String password) {
+    private boolean isMember(final String account, final String password) {
         boolean isMember = false;
-//        if (Util.networkConnected(this)) {
-//            String url = Util.URL + "MemberServlet";
-//            JsonObject jsonObject = new JsonObject();
-//            jsonObject.addProperty("action", "isMember");
-//            jsonObject.addProperty("userId", userId);
-//            jsonObject.addProperty("password", password);
-//            String jsonOut = jsonObject.toString();
-//            isMemberTask = new CommonTask(url, jsonOut);
-//            try {
-//                String result = isMemberTask.execute().get();
-//                isMember = Boolean.valueOf(result);
-//            } catch (Exception e) {
-//                Log.e(TAG, e.toString());
-//                isMember = false;
-//            }
-//        } else {
-//            Util.showToast(this, R.string.msg_NoNetwork);
-//        }
-        return "123".equals(userId) && "123".equals(password);
+        MemVO memVO = null;
+        SharedPreferences preferences = getSharedPreferences(
+                Util.PREF_FILE, MODE_PRIVATE);
+
+        if (Util.networkConnected(this)) {
+            String url = Util.URL + "/mem/memAndroid.do";
+            JsonObject jsonObject = new JsonObject();
+            jsonObject.addProperty("action", "login");
+            jsonObject.addProperty("account", account);
+            jsonObject.addProperty("password", password);
+            String jsonOut = jsonObject.toString();
+            isMemberTask = new CommonTask(url, jsonOut);
+            try {
+                String result = isMemberTask.execute().get();
+                Util.showToast(this, result);
+                memVO = new Gson().fromJson(result, MemVO.class);
+                // 若無法取得會員VO物件, 代表無此會員
+                // 將登入狀態設為false
+                if ("".equals(result)) {
+                    Util.showToast(this, R.string.msg_NoProfileFound);
+                    isMember = false;
+                }
+                else {
+                    Util.showToast(this, "success");
+                    //preferences.edit().putString("memVO", result);
+                    isMember = true;
+                }
+
+            } catch (Exception e) {
+                Log.e(TAG, e.toString());
+                isMember = false;
+            }
+        } else {
+            Util.showToast(this, R.string.msg_NoNetwork);
+        }
+        return isMember;
     }
 
     @Override

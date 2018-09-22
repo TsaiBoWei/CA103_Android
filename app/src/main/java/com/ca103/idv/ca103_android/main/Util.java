@@ -9,6 +9,7 @@ import android.widget.Toast;
 
 import com.ca103.idv.ca103_android.R;
 import com.ca103.idv.ca103_android.member.LoginActivity;
+import com.ca103.idv.ca103_android.member.MemVO;
 
 import java.util.ArrayList;
 
@@ -20,13 +21,14 @@ import java.util.ArrayList;
 
 public class Util {
     // 模擬器連Tomcat
-    public static String URL = "http://10.0.2.2:8081/BookStoreWeb/";
+    //public static String URL = "http://10.0.2.2:8081/CA103G10908";
     //public static String URL = "http://172.20.10.6:8081/BookStoreWeb/";
-
+    public static String URL = "http://192.168.1.100:8081/CA103G10908";
     // 偏好設定檔案名稱
     public final static String PREF_FILE = "preference";
 
     public static final int REQ_LOGIN = 1;
+
 
     // 功能分類
     public final static Page[] PAGES = {

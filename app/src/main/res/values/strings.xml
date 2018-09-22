@@ -22,6 +22,7 @@
     <!--error messages-->
     <string name="msg_InvalidUserOrPassword">Invalid user name or password</string>
     <string name="msg_NoNetwork">No network connection available</string>
+    <string name="msg_NoProfileFound">No profile found</string>
 
     <!--button text-->
     <string name="text_btnCollect">收藏</string>
