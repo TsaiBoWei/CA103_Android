@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import com.ca103.idv.ca103_android.R;
 import com.ca103.idv.ca103_android.main.Util;
@@ -22,12 +23,14 @@ public class LoginActivity extends AppCompatActivity {
     private static final String TAG = "LoginActivity";
     private TextView tvMessage;
     private CommonTask isMemberTask;
+    private Gson gson;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         tvMessage = findViewById(R.id.tvMessage);
+        gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
         setResult(RESULT_CANCELED);
     }
 
@@ -36,12 +39,11 @@ public class LoginActivity extends AppCompatActivity {
         super.onStart();
         SharedPreferences preferences = getSharedPreferences(Util.PREF_FILE,
                 MODE_PRIVATE);
-        boolean login = false;
-                //preferences.getBoolean("login", false);
+        boolean login = preferences.getBoolean("login", false);
         if (login) {
-            String userId = preferences.getString("account", "");
+            String accout = preferences.getString("account", "");
             String password = preferences.getString("password", "");
-            if (isMember(userId, password)) {
+            if (isMember(accout, password)) {
                 setResult(RESULT_OK);
                 finish();
             }
@@ -92,7 +94,7 @@ public class LoginActivity extends AppCompatActivity {
             try {
                 String result = isMemberTask.execute().get();
                 Util.showToast(this, result);
-                memVO = new Gson().fromJson(result, MemVO.class);
+                memVO = gson.fromJson(result, MemVO.class);
                 // 若無法取得會員VO物件, 代表無此會員
                 // 將登入狀態設為false
                 if ("".equals(result)) {
@@ -101,7 +103,9 @@ public class LoginActivity extends AppCompatActivity {
                 }
                 else {
                     Util.showToast(this, "success");
-                    //preferences.edit().putString("memVO", result);
+                    preferences.edit().putString("memVO", result);
+                    preferences.edit().putString("account", memVO.getMem_account());
+                    preferences.edit().putString("password", memVO.getMem_password());
                     isMember = true;
                 }
 
