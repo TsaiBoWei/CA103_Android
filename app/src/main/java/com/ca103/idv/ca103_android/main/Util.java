@@ -29,6 +29,7 @@ public class Util {
 
     public static final int REQ_LOGIN = 1;
 
+    public static MemVO memVO = null;
 
     // 功能分類
     public final static Page[] PAGES = {

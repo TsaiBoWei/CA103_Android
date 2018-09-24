@@ -93,7 +93,6 @@ public class LoginActivity extends AppCompatActivity {
             isMemberTask = new CommonTask(url, jsonOut);
             try {
                 String result = isMemberTask.execute().get();
-                Util.showToast(this, result);
                 memVO = gson.fromJson(result, MemVO.class);
                 // 若無法取得會員VO物件, 代表無此會員
                 // 將登入狀態設為false

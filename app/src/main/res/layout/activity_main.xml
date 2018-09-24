@@ -21,7 +21,7 @@
         android:choiceMode="singleChoice"
         android:layout_gravity="start"
         app:headerLayout="@layout/navigation_header"
-        app:menu="@menu/navigation_menu">
+        app:menu="@menu/left_nav_menu">
     </android.support.design.widget.NavigationView>
 
 

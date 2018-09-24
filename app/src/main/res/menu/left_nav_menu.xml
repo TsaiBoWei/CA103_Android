@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/left_nav_profile"
+            android:icon="@drawable/ic_left_nav_profile_24dp"
+            android:title="@string/text_left_nav_profile" />
+        <item
+            android:id="@+id/left_nav_myevent"
+            android:icon="@drawable/ic_event"
+            android:title="@string/text_left_nav_myevent" />
+
+        <item
+            android:id="@+id/left_nav_course"
+            android:icon="@drawable/ic_lesson"
+            android:title="@string/text_left_nav_mycourse" />
+
+        <item
+            android:id="@+id/left_nav_myplan"
+            android:icon="@drawable/ic_calendar"
+            android:title="@string/text_left_nav_myplan" />
+
+    </group>
+
+</menu>

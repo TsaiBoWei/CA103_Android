@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item android:id="@+id/seesAsOthers"
+            android:title="檢視角度"></item>
+
+        <item android:id="@+id/edit_file"
+            android:title="編輯個人檔案">
+        </item>
+
+        <item android:id="@+id/make_post"
+            android:title="撰寫貼文"></item>
+
+    </group>
+</menu>

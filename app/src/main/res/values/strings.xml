@@ -1,6 +1,10 @@
 <resources>
     <string name="app_name">CA103_Android</string>
 
+    <string name="text_left_nav_profile">個人頁</string>
+    <string name="text_left_nav_myevent">我的活動</string>
+    <string name="text_left_nav_mycourse">我的課程</string>
+    <string name="text_left_nav_myplan">我的計畫</string>
     <string name="text_Home">Home</string>
     <string name="text_News">News</string>
     <string name="text_Map">Map</string>

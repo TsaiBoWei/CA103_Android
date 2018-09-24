@@ -17,6 +17,7 @@ import android.view.MenuItem;
 
 import com.ca103.idv.ca103_android.R;
 import com.ca103.idv.ca103_android.member.LoginActivity;
+import com.ca103.idv.ca103_android.member.ProfileFragment;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -59,6 +60,7 @@ public class MainActivity extends AppCompatActivity {
                         R.string.text_Open, R.string.text_Close);
 
         navigationView = findViewById(R.id.navigation_view);
+        Fragment fragment;
         navigationView.setNavigationItemSelectedListener(
                 new NavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -69,8 +71,9 @@ public class MainActivity extends AppCompatActivity {
                 drawerLayout.closeDrawers();
                 Fragment fragment;
                 switch (menuItem.getItemId()) {
-                    case R.id.item_Home:
-                        initBody();
+                    case R.id.left_nav_profile:
+                        fragment = new ProfileFragment();
+                        switchFragment(fragment);
                         break;
                     default:
                         initBody();
