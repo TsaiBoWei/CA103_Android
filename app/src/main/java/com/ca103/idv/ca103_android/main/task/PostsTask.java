@@ -53,7 +53,9 @@ public class PostsTask extends AsyncTask<String, Integer, List<PostVO>> {
             dos = new DataOutputStream(connection.getOutputStream());
             // 使用此方式則可以在servlet使用req.getParameter方法取得請求參數
             // (可跟web端servlet對接)
-            String content = "action=get_list_by_mem_id?mem_id="+mem_id;
+            String content = "action=get_list_by_mem_id";
+            dos.writeBytes(content);
+            content="mem_id=" + mem_id;
             dos.writeBytes(content);
             dos.flush();
 

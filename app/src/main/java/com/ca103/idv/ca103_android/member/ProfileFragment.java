@@ -30,9 +30,9 @@ import java.util.List;
 import java.lang.reflect.Type;
 
 public class ProfileFragment extends Fragment {
-    private static final String TAG = "ProfileFragment";
+    private static final String TAG = "/post/PostAndroid.do";
     private String mem_id;
-    PostsTask postsTask;
+    CommonTask postsTask;
 
 
     @Override
@@ -42,15 +42,21 @@ public class ProfileFragment extends Fragment {
 
         // Use Bundle to send data to fragment
         // not tried yet
-        postsTask = new PostsTask("M000001");
         try {
-            List<PostVO> posts = postsTask.execute().get();
+            JsonObject jsonObject = new JsonObject();
+            jsonObject.addProperty("action", "get_list_by_mem_id");
+            jsonObject.addProperty("mem_id", mem_id);
+            String jsonout = jsonObject.toString();
             Util.showToast(this.getActivity(),"doing post task");
-            posts.add(posts.get(0));
-            posts.add(posts.get(0));
-            posts.add(posts.get(0));
-            posts.add(posts.get(0));
-            recyclerView.setAdapter( new ProfileAdapter(posts) );
+            postsTask = new CommonTask(Util.URL+TAG, jsonout);
+            String jsonin = postsTask.execute().get();
+            List<PostVO> posts ;
+//            posts.add(posts.get(0));
+//            posts.add(posts.get(0));
+//            posts.add(posts.get(0));
+//            posts.add(posts.get(0));
+//            Util.showToast(this.getActivity(),posts.get(0).getMem_id());
+//            recyclerView.setAdapter( new ProfileAdapter(posts) );
         } catch (Exception e) {
             Log.e(TAG, e.toString());
         }
