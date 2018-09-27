@@ -16,6 +16,7 @@ import android.view.MenuItem;
 
 
 import com.ca103.idv.ca103_android.R;
+import com.ca103.idv.ca103_android.event.EventFragment;
 import com.ca103.idv.ca103_android.member.LoginActivity;
 import com.ca103.idv.ca103_android.member.ProfileFragment;
 
@@ -32,8 +33,12 @@ public class MainActivity extends AppCompatActivity {
         setUpActionBar();
         initDrawer();
         initBody();
-        Intent logintIntent = new Intent(MainActivity.this, LoginActivity.class);
-        startActivityForResult(logintIntent, Util.REQ_LOGIN);
+        if ( !Util.networkConnected(this) )
+            Util.showToast(this, R.string.msg_NoNetwork);
+        else {
+            Intent logintIntent = new Intent(MainActivity.this, LoginActivity.class);
+            startActivityForResult(logintIntent, Util.REQ_LOGIN);
+        }
     }
 
     // 初始化Action Bar
@@ -71,9 +76,22 @@ public class MainActivity extends AppCompatActivity {
                 drawerLayout.closeDrawers();
                 Fragment fragment;
                 switch (menuItem.getItemId()) {
+                    case R.id.left_nav_home:
+                        fragment = new HomeFragment();
+                        switchFragment(fragment);
+                        break;
                     case R.id.left_nav_profile:
                         fragment = new ProfileFragment();
                         switchFragment(fragment);
+                        break;
+                    case R.id.left_nav_myevent:
+                        fragment = new EventFragment();
+                        switchFragment(fragment);
+                        break;
+                    case  R.id.left_nav_myplan:
+                        break;
+
+                    case R.id.left_nav_course:
                         break;
                     default:
                         initBody();

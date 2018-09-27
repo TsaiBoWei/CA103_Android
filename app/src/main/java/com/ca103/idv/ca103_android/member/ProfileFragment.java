@@ -32,7 +32,6 @@ import java.lang.reflect.Type;
 public class ProfileFragment extends Fragment {
     private static final String TAG = "ProfileFragment";
     private String mem_id;
-    Gson gson;
     PostsTask postsTask;
 
 
@@ -46,7 +45,12 @@ public class ProfileFragment extends Fragment {
         postsTask = new PostsTask("M000001");
         try {
             List<PostVO> posts = postsTask.execute().get();
-            recyclerView.setAdapter( new ProfileAdapter(inflater, posts) );
+            Util.showToast(this.getActivity(),"doing post task");
+            posts.add(posts.get(0));
+            posts.add(posts.get(0));
+            posts.add(posts.get(0));
+            posts.add(posts.get(0));
+            recyclerView.setAdapter( new ProfileAdapter(posts) );
         } catch (Exception e) {
             Log.e(TAG, e.toString());
         }
@@ -56,18 +60,17 @@ public class ProfileFragment extends Fragment {
 
     private class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHolder> {
 
-        private LayoutInflater inflater;
         private List<PostVO> postList;
         private View visibleView;
 
-        public ProfileAdapter(LayoutInflater inflater, List<PostVO> postlist) {
-            this.inflater = inflater;
+        public ProfileAdapter( List<PostVO> postlist) {
             this.postList = postlist;
         }
 
         class ViewHolder extends RecyclerView.ViewHolder {
             private ImageButton ibtnPhoto;
             private TextView tvCardContent;
+            private TextView tvName;
             private Button btnCollect;
             private Button btnComment;
             public ViewHolder(View view){
@@ -76,6 +79,7 @@ public class ProfileFragment extends Fragment {
                 tvCardContent = view.findViewById(R.id.tvCardContent);
                 btnCollect = view.findViewById(R.id.btnCollect);
                 btnComment = view.findViewById(R.id.btnComment);
+                tvName = view.findViewById(R.id.tvName);
             }
         }
 
@@ -86,14 +90,16 @@ public class ProfileFragment extends Fragment {
 
         @Override
         public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
-            View itemView = inflater.inflate(R.layout.cardview_post, viewGroup, false);
+            View itemView = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.cardview_post, viewGroup, false);
             return  new ViewHolder(itemView);
         }
 
         @Override
         public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
             final PostVO post = postList.get(position);
+            holder.tvName.setText(post.getMem_id());
             holder.tvCardContent.setText(post.getPost_con());
+
         }
     }
 }

@@ -23,7 +23,7 @@ public class Util {
     // 模擬器連Tomcat
     //public static String URL = "http://10.0.2.2:8081/CA103G10908";
     //public static String URL = "http://172.20.10.6:8081/BookStoreWeb/";
-    public static String URL = "http://192.168.1.100:8081/CA103G10908";
+    public static String URL = "http://192.168.1.102:8081/CA103G10926";
     // 偏好設定檔案名稱
     public final static String PREF_FILE = "preference";
 

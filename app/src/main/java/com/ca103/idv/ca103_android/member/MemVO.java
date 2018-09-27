@@ -1,6 +1,6 @@
 package com.ca103.idv.ca103_android.member;
 
-import java.util.Date;
+import java.sql.Date;
 
 public class MemVO implements java.io.Serializable{
     private String mem_id;

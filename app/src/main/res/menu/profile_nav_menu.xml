@@ -6,7 +6,7 @@
             android:title="檢視角度"></item>
 
         <item android:id="@+id/edit_file"
-            android:title="編輯個人檔案">
+            android:title="編輯檔案">
         </item>
 
         <item android:id="@+id/make_post"

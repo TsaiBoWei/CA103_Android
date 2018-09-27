@@ -64,6 +64,7 @@ public class LoginActivity extends AppCompatActivity {
             return;
         }
 
+        Util.showToast(this,"first part done");
         if (isMember(userId, password)) {
             SharedPreferences preferences = getSharedPreferences(
                     Util.PREF_FILE, MODE_PRIVATE);
@@ -72,6 +73,7 @@ public class LoginActivity extends AppCompatActivity {
                     .putString("password", password).apply();
             setResult(RESULT_OK);
             finish();
+            return;
         } else {
             showMessage(R.string.msg_InvalidUserOrPassword);
         }
