@@ -1,6 +1,5 @@
 package com.ca103.idv.ca103_android.member;
 
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -9,15 +8,12 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
-
+import com.ca103.idv.ca103_android.R;
+import com.ca103.idv.ca103_android.main.Util;
+import com.ca103.idv.ca103_android.main.task.CommonTask;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
-import com.ca103.idv.ca103_android.R;
-import com.ca103.idv.ca103_android.main.Util;
-import com.ca103.idv.ca103_android.main.task.*;
-
-import java.io.Console;
 
 public class LoginActivity extends AppCompatActivity {
     private static final String TAG = "LoginActivity";
@@ -88,6 +84,7 @@ public class LoginActivity extends AppCompatActivity {
         if (Util.networkConnected(this)) {
             String url = Util.URL + "/mem/memAndroid.do";
             JsonObject jsonObject = new JsonObject();
+            jsonObject.addProperty("method", "POST");
             jsonObject.addProperty("action", "login");
             jsonObject.addProperty("account", account);
             jsonObject.addProperty("password", password);

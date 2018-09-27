@@ -19,6 +19,7 @@ import com.ca103.idv.ca103_android.R;
 import com.ca103.idv.ca103_android.event.EventFragment;
 import com.ca103.idv.ca103_android.member.LoginActivity;
 import com.ca103.idv.ca103_android.member.ProfileFragment;
+import com.ca103.idv.ca103_android.plan.PlanFragment;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -89,6 +90,8 @@ public class MainActivity extends AppCompatActivity {
                         switchFragment(fragment);
                         break;
                     case  R.id.left_nav_myplan:
+                        fragment = new PlanFragment();
+                        switchFragment(fragment);
                         break;
 
                     case R.id.left_nav_course:
