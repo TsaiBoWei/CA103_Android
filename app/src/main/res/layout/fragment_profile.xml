@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:tooltipText="個人頁"
     tools:layout_editor_absoluteY="81dp">
 
 
@@ -13,7 +14,6 @@
         android:layout_height="0dp"
         android:layout_marginBottom="12dp"
         android:layout_marginTop="16dp"
-        android:src="@drawable/doge"
         app:layout_constraintBottom_toTopOf="@+id/tvProfileText"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

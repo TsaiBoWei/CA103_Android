@@ -31,11 +31,6 @@ public class HomeFragment extends Fragment {
         return view;
     }
 
-    public void findViews(){
-        bottomNavigationView = view.findViewById(R.id.bottomNavigationView);
-
-    }
-
 
 
     public class HomeFragmentAdapter extends RecyclerView.Adapter<HomeFragmentAdapter.ViewHolder> {

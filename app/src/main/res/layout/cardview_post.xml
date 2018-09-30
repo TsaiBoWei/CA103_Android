@@ -50,16 +50,6 @@
             app:layout_constraintTop_toBottomOf="@+id/ivPhoto" />
 
         <Button
-            android:id="@+id/btnCollect"
-            android:layout_width="60dp"
-            android:layout_height="40dp"
-            android:layout_marginBottom="@dimen/card_post_bottom_button_dimen"
-            android:layout_marginStart="@dimen/card_post_bottom_button_dimen"
-            android:text="@string/text_btnCollect"
-            app:layout_constraintTop_toBottomOf="@+id/tvCardContent"
-            app:layout_constraintStart_toStartOf="parent" />
-
-        <Button
             android:id="@+id/btnComment"
             android:layout_width="60dp"
             android:layout_height="40dp"

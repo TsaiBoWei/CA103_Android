@@ -101,7 +101,7 @@ public class LoginActivity extends AppCompatActivity {
                 }
                 else {
                     Util.showToast(this, "success");
-                    preferences.edit().putString("memVO", result);
+                    Util.memVO = memVO;
                     preferences.edit().putString("account", memVO.getMem_account());
                     preferences.edit().putString("password", memVO.getMem_password());
                     isMember = true;

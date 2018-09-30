@@ -27,6 +27,15 @@
             android:icon="@drawable/ic_calendar"
             android:title="@string/text_left_nav_myplan" />
 
+        <item
+            android:id="@+id/chat"
+            android:title="聊天室"
+            />
+
+        <item
+            android:id="@+id/logout"
+            android:title="登出"/>
+
     </group>
 
 </menu>

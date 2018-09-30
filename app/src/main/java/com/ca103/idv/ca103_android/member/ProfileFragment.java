@@ -1,9 +1,13 @@
 package com.ca103.idv.ca103_android.member;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -29,38 +33,53 @@ import java.util.List;
 public class ProfileFragment extends Fragment {
     private static final String TAG = "/post/PostAndroid.do";
     private String mem_id;
+
     CommonTask postsTask;
+    Bundle bundle;
     Gson gson;
+
+    MemVO memVO;
+    ImageView ivProfilePicture;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
+
+        // recycler view part
         RecyclerView recyclerView = view.findViewById(R.id.recycleViewProfilePosts);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
+
+        // create gson
         gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
-        // Use Bundle to send data to fragment
-        // not tried yet
+
+        // Use Bundle to get data from activity
+        bundle = this.getArguments();
+        if ( !bundle.isEmpty() )
+            mem_id = bundle.getString("mem_id");
+
+        ivProfilePicture = view.findViewById(R.id.ivProfilePicture);
+        Bitmap decode64 =
+                BitmapFactory.decodeByteArray(Util.memVO.getMem_photo(),
+                        0,
+                        Util.memVO.getMem_photo().length);
+        ivProfilePicture.setImageBitmap(decode64);
+
+        // get all posts
         try {
+            // servlet request
             JsonObject jsonObject = new JsonObject();
             jsonObject.addProperty("action", "get_list_by_mem_id");
-            jsonObject.addProperty("mem_id", "M000001");
+            jsonObject.addProperty("mem_id", mem_id);
             String jsonout = jsonObject.toString();
-            Util.showToast(this.getActivity(),"doing post task");
+
+            // create task
             postsTask = new CommonTask(Util.URL+TAG, jsonout);
             String result = postsTask.execute().get();
             Type listType = new TypeToken<List<PostVO>>(){}.getType();
+
             List<PostVO> posts = gson.fromJson(result, listType);
-            posts.add(posts.get(0));
-            posts.add(posts.get(0));
-            posts.add(posts.get(0));
-            posts.add(posts.get(0));
-            posts.add(posts.get(0));
-            posts.add(posts.get(0));
-            posts.add(posts.get(0));
-            posts.add(posts.get(0));
-            posts.add(posts.get(0));
-            Util.showToast(this.getActivity(),posts.get(0).getMem_id());
             recyclerView.setAdapter( new ProfileAdapter(posts) );
         } catch (Exception e) {
             Log.e(TAG, e.toString());
@@ -81,25 +100,27 @@ public class ProfileFragment extends Fragment {
             private ImageView ivPhoto;
             private TextView tvCardContent;
             private TextView tvName;
-            private Button btnCollect;
             private Button btnComment;
             public ViewHolder(View view){
                 super(view);
                 ivPhoto = view.findViewById(R.id.ivPhoto);
-                ivPhoto.setImageResource(R.drawable.doge);
-                tvCardContent = view.findViewById(R.id.tvCardContent);
-                btnCollect = view.findViewById(R.id.btnCollect);
-                btnCollect.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
 
-                    }
-                });
+                MemVO memvo = Util.memVO;
+                if ( memvo.getMem_photo() != null ) {
+                    Bitmap decode64 =
+                            BitmapFactory.decodeByteArray(Util.memVO.getMem_photo(),
+                                    0,
+                                    Util.memVO.getMem_photo().length);
+                    ivPhoto = view.findViewById(R.id.ivPhoto);
+                    ivPhoto.setImageBitmap(decode64);
+                }
+
+                tvCardContent = view.findViewById(R.id.tvCardContent);
                 btnComment = view.findViewById(R.id.btnComment);
                 btnComment.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-
+                        // show
                     }
                 });
                 tvName = view.findViewById(R.id.tvName);
@@ -131,5 +152,14 @@ public class ProfileFragment extends Fragment {
             });
 
         }
+    }
+
+
+    private void switchFragment(Fragment fragment) {
+        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction =
+                fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.body, fragment);
+        fragmentTransaction.commit();
     }
 }
