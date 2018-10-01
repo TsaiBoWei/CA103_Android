@@ -60,7 +60,7 @@ public class LoginActivity extends AppCompatActivity {
             return;
         }
 
-        Util.showToast(this,"first part done");
+        //Util.showToast(this,"first part done");
         if (isMember(userId, password)) {
             SharedPreferences preferences = getSharedPreferences(
                     Util.PREF_FILE, MODE_PRIVATE);
@@ -100,10 +100,9 @@ public class LoginActivity extends AppCompatActivity {
                     isMember = false;
                 }
                 else {
-                    Util.showToast(this, "success");
                     Util.memVO = memVO;
                     preferences.edit().putString("account", memVO.getMem_account());
-                    preferences.edit().putString("password", memVO.getMem_password());
+                    preferences.edit().putString("password", memVO.getMem_password()).apply();
                     isMember = true;
                 }
 

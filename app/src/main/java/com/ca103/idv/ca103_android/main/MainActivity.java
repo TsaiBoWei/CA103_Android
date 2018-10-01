@@ -3,6 +3,8 @@ package com.ca103.idv.ca103_android.main;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -13,18 +15,14 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 
-
 import com.ca103.idv.ca103_android.R;
-
 import com.ca103.idv.ca103_android.event.EventFragment;
 import com.ca103.idv.ca103_android.member.LoginActivity;
 import com.ca103.idv.ca103_android.member.ProfileFragment;
 import com.ca103.idv.ca103_android.plan.PlanFragment;
-import com.ca103.idv.ca103_android.post.WebviewFragment;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -139,6 +137,12 @@ public class MainActivity extends AppCompatActivity {
                 .setPositiveButton("yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        Util.memVO = null;
+                        SharedPreferences preferences = getSharedPreferences(Util.PREF_FILE,
+                                MODE_PRIVATE);
+                        // 設定外部空間參考 login
+                        preferences.edit().putBoolean("login", false).apply();
+
                         Util.memVO = null;
                         Intent logintIntent = new Intent(MainActivity.this, LoginActivity.class);
                         startActivityForResult(logintIntent, Util.REQ_LOGIN);

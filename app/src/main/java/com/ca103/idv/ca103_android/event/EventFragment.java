@@ -2,12 +2,9 @@ package com.ca103.idv.ca103_android.event;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.media.Image;
-import android.opengl.Visibility;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
-import android.os.Bundle;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -21,7 +18,6 @@ import android.widget.TextView;
 import com.ca103.idv.ca103_android.R;
 import com.ca103.idv.ca103_android.main.Util;
 import com.ca103.idv.ca103_android.main.task.CommonTask;
-import com.ca103.idv.ca103_android.post.PostVO;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
@@ -118,17 +114,18 @@ public class EventFragment extends Fragment {
         public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
             final EventVO eventVO = eventList.get(position);
             holder.tvEventTitle.setText(eventVO.getEve_title());
-            holder.tvEventStartDate.setText(eventVO.getEreg_startdate().toString());
-            if ( eventVO.getEve_logo() != null ) {
+            holder.tvEventStartDate.setText(eventVO.getEve_startdate().toString());
+
+            // 設定活動圖片
+            if ( eventVO.getEve_photo() != null ) {
                 Bitmap decode64 =
-                        BitmapFactory.decodeByteArray(eventVO.getEve_logo(),
+                        BitmapFactory.decodeByteArray(eventVO.getEve_photo(),
                                 0,
-                                eventVO.getEve_logo().length);
+                                eventVO.getEve_photo().length);
                 holder.ivEventLogo.setImageBitmap(decode64);
             }
-
+            // 設定活動內容
             if (eventVO.getEve_content()!=null ) {
-
                 holder.wvEventContent.loadDataWithBaseURL
                 (null, eventVO.getEve_content(), "text/html", "utf-8", null);
 

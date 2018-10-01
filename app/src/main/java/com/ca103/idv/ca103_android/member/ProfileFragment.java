@@ -27,6 +27,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 
+import java.io.ByteArrayOutputStream;
 import java.lang.reflect.Type;
 import java.util.List;
 
@@ -38,7 +39,6 @@ public class ProfileFragment extends Fragment {
     Bundle bundle;
     Gson gson;
 
-    MemVO memVO;
     ImageView ivProfilePicture;
 
     @Override
@@ -60,15 +60,26 @@ public class ProfileFragment extends Fragment {
             mem_id = bundle.getString("mem_id");
 
         ivProfilePicture = view.findViewById(R.id.ivProfilePicture);
-        Bitmap decode64 =
-                BitmapFactory.decodeByteArray(Util.memVO.getMem_photo(),
-                        0,
-                        Util.memVO.getMem_photo().length);
-        ivProfilePicture.setImageBitmap(decode64);
-
+        if ( Util.memVO.getMem_photo() != null  ) {
+            Bitmap decode64 =
+                    BitmapFactory.decodeByteArray(Util.memVO.getMem_photo(),
+                            0,
+                            Util.memVO.getMem_photo().length);
+            ivProfilePicture.setImageBitmap(decode64);
+        }
+        else {
+            ivProfilePicture.setImageResource(R.drawable.doge);
+            Bitmap decode = BitmapFactory.decodeResource(getResources(),R.drawable.doge);
+            ByteArrayOutputStream blob = new ByteArrayOutputStream();
+            decode.compress(Bitmap.CompressFormat.PNG, 0, blob);
+            byte[] bitmapdata = blob.toByteArray();
+            Util.memVO.setMem_photo(bitmapdata);
+        }
         // get all posts
         try {
             // servlet request
+
+
             JsonObject jsonObject = new JsonObject();
             jsonObject.addProperty("action", "get_list_by_mem_id");
             jsonObject.addProperty("mem_id", mem_id);

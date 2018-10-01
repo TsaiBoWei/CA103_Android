@@ -22,7 +22,7 @@
         <ImageView
             android:id="@+id/ivEventLogo"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="100dp"
             android:layout_centerInParent="true"
             android:layout_marginBottom="25dp"
             android:layout_marginEnd="5dp"
@@ -61,8 +61,8 @@
 
         <WebView
             android:id="@+id/wvEventContent"
-            android:layout_width="wrap_content"
-            android:layout_height="300dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_alignParentStart="true"
             android:visibility="gone"
