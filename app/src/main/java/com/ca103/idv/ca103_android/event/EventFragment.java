@@ -1,5 +1,6 @@
 package com.ca103.idv.ca103_android.event;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -92,14 +93,14 @@ public class EventFragment extends Fragment {
             private ImageView ivEventLogo;
             private TextView tvEventStartDate;
             private TextView tvEventTitle;
-            private WebView wvEventContent;
+            //private WebView wvEventContent;
 
             public ViewHolder(View itemView) {
                 super(itemView);
                 ivEventLogo = itemView.findViewById(R.id.ivEventLogo);
                 tvEventStartDate = itemView.findViewById((R.id.tvEventStartDate));
                 tvEventTitle = itemView.findViewById(R.id.tvEventTitle);
-                wvEventContent = itemView.findViewById(R.id.wvEventContent);
+
             }
         }
 
@@ -124,26 +125,32 @@ public class EventFragment extends Fragment {
                                 eventVO.getEve_photo().length);
                 holder.ivEventLogo.setImageBitmap(decode64);
             }
+
             // 設定活動內容
-            if (eventVO.getEve_content()!=null ) {
-                holder.wvEventContent.loadDataWithBaseURL
-                (null, eventVO.getEve_content(), "text/html", "utf-8", null);
-
-                holder.wvEventContent.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Util.showToast(getActivity(),"is clicked");
-                    }
-                });
-
-            }
+//            if (eventVO.getEve_content()!=null ) {
+//                holder.wvEventContent.loadDataWithBaseURL
+//                (null, eventVO.getEve_content(), "text/html", "utf-8", null);
+//
+//                holder.wvEventContent.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        Util.showToast(getActivity(),"is clicked");
+//                    }
+//                });
+//
+//            }
             holder.ivEventLogo.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if ( holder.wvEventContent.getVisibility() == View.GONE )
-                        holder.wvEventContent.setVisibility(View.VISIBLE);
-                    else
-                        holder.wvEventContent.setVisibility(View.GONE);
+                    Bundle bundle = new Bundle();
+                    bundle.putString("Content", eventVO.getEve_content());
+                    Intent intent = new Intent(getActivity(), EventWebVewActivity.class);
+                    startActivity(intent);
+
+//                    if ( holder.wvEventContent.getVisibility() == View.GONE )
+//                        holder.wvEventContent.setVisibility(View.VISIBLE);
+//                    else
+//                        holder.wvEventContent.setVisibility(View.GONE);
                 }
             });
         }

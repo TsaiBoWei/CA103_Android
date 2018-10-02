@@ -197,7 +197,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onKeyUp(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK)
-            return false;// return false 或者return true 都不会走onBackPressed了
+            return true;// return false 或者return true 都不会走onBackPressed了
         return false;
     }
 
