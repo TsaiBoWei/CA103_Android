@@ -118,6 +118,7 @@ public class EventFragment extends Fragment {
             holder.tvEventStartDate.setText(eventVO.getEve_startdate().toString());
 
             // 設定活動圖片
+            // 須改用ImageTask
             if ( eventVO.getEve_photo() != null ) {
                 Bitmap decode64 =
                         BitmapFactory.decodeByteArray(eventVO.getEve_photo(),
@@ -147,10 +148,6 @@ public class EventFragment extends Fragment {
                     Intent intent = new Intent(getActivity(), EventWebVewActivity.class);
                     startActivity(intent);
 
-//                    if ( holder.wvEventContent.getVisibility() == View.GONE )
-//                        holder.wvEventContent.setVisibility(View.VISIBLE);
-//                    else
-//                        holder.wvEventContent.setVisibility(View.GONE);
                 }
             });
         }
