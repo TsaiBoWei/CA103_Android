@@ -144,8 +144,9 @@ public class EventFragment extends Fragment {
                 @Override
                 public void onClick(View v) {
                     Bundle bundle = new Bundle();
-                    bundle.putString("Content", eventVO.getEve_content());
+                    bundle.putString("content", eventVO.getEve_content());
                     Intent intent = new Intent(getActivity(), EventWebVewActivity.class);
+                    intent.putExtras(bundle);
                     startActivity(intent);
 
                 }

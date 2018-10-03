@@ -3,6 +3,7 @@
     package="com.ca103.idv.ca103_android">
 
     <uses-permission android:name="android.permission.INTERNET" />
+
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
@@ -24,6 +25,10 @@
         <activity
             android:name=".member.LoginActivity"
             android:launchMode="singleTop" />
+
+        <activity android:name=".event.EventWebVewActivity"
+            android:launchMode="singleTop"/>
+
     </application>
 
 </manifest>
