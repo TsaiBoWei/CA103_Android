@@ -4,6 +4,7 @@
     android:layout_height="172dp"
     android:background="@drawable/drawer_background"
     android:orientation="vertical"
+    android:id="@+id/navigation_headler"
     android:padding="16dp">
 
     <ImageView
@@ -19,14 +20,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/text_UserName"
-        android:textColor="#FFFFFF"
-        android:textSize="16sp" />
-
-    <TextView
-        android:id="@+id/tvEmail"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/text_Email"
         android:textColor="#FFFFFF"
         android:textSize="16sp" />
 

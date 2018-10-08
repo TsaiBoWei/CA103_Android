@@ -4,6 +4,8 @@ package com.ca103.idv.ca103_android.main;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -17,6 +19,10 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.ca103.idv.ca103_android.R;
 import com.ca103.idv.ca103_android.event.EventFragment;
@@ -28,7 +34,9 @@ public class MainActivity extends AppCompatActivity {
 
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
+    private LinearLayout navigation_header;
     private ActionBarDrawerToggle actionBarDrawerToggle;
+    private View navigationHeaderView;
     Bundle bundle;
 
     @Override
@@ -36,14 +44,15 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         setUpActionBar();
-        initDrawer();
-        initBody();
+
         if ( !Util.networkConnected(this) )
             Util.showToast(this, R.string.msg_NoNetwork);
         else {
             Intent logintIntent = new Intent(MainActivity.this, LoginActivity.class);
             startActivityForResult(logintIntent, Util.REQ_LOGIN);
         }
+        initDrawer();
+        initBody();
     }
 
     // 初始化Action Bar
@@ -69,7 +78,27 @@ public class MainActivity extends AppCompatActivity {
                 new ActionBarDrawerToggle(this,drawerLayout,
                         R.string.text_Open, R.string.text_Close);
 
-        navigationView = findViewById(R.id.navigation_view);
+        // nav view 無法取得Header layout
+        // 改寫
+        navigationView = (NavigationView)findViewById(R.id.navigation_view);
+        navigationHeaderView = navigationView.inflateHeaderView(R.layout.navigation_header);
+
+        if ( navigationView.getHeaderCount() >0 ) {
+
+            ImageView ivUser = navigationHeaderView.findViewById(R.id.ivUser);
+            TextView tvUserName = navigationHeaderView.findViewById(R.id.tvUserName);
+
+            if ( Util.memVO != null ) {
+                tvUserName.setText(Util.memVO.getMem_name());
+                if ( Util.memVO.getMem_photo() != null ) {
+                    Bitmap decode64 =
+                            BitmapFactory.decodeByteArray(Util.memVO.getMem_photo(),
+                                    0,
+                                    Util.memVO.getMem_photo().length);
+                    ivUser.setImageBitmap(decode64);
+                }
+            }
+        }
         Fragment fragment;
         navigationView.setNavigationItemSelectedListener(
                 new NavigationView.OnNavigationItemSelectedListener() {
@@ -89,7 +118,6 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.left_nav_profile:
                         fragment = new ProfileFragment();
                         bundle = new Bundle();
-
                         bundle.putString("mem_id", Util.memVO.getMem_id());
                         fragment.setArguments(bundle);
                         switchFragment(fragment);
@@ -105,11 +133,9 @@ public class MainActivity extends AppCompatActivity {
                         switchFragment(fragment);
                         setTitle("計畫");
                         break;
-
                     case R.id.left_nav_course:
                         setTitle("課程");
                         break;
-
                     case R.id.logout:
                         logout();
                         break;
@@ -163,6 +189,21 @@ public class MainActivity extends AppCompatActivity {
         if ( resultCode == RESULT_OK ) {
             switch(requestCode) {
                 case Util.REQ_LOGIN :
+                    if ( navigationView.getHeaderCount() >0 ) {
+                        ImageView ivUser = navigationHeaderView.findViewById(R.id.ivUser);
+                        TextView tvUserName = navigationHeaderView.findViewById(R.id.tvUserName);
+
+                        if ( Util.memVO != null ) {
+                            tvUserName.setText(Util.memVO.getMem_name());
+                            if ( Util.memVO.getMem_photo() != null ) {
+                                Bitmap decode64 =
+                                        BitmapFactory.decodeByteArray(Util.memVO.getMem_photo(),
+                                                0,
+                                                Util.memVO.getMem_photo().length);
+                                ivUser.setImageBitmap(decode64);
+                            }
+                        }
+                    }
                     break;
             }
         }
@@ -196,8 +237,9 @@ public class MainActivity extends AppCompatActivity {
     // 改寫返回鍵事件, 實作單一檢視後回到上一個視窗, 且專注在上一個選擇項
     @Override
     public boolean onKeyUp(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK)
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
             return true;// return false 或者return true 都不会走onBackPressed了
+        }
         return false;
     }
 

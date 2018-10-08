@@ -22,7 +22,6 @@
         android:layout_height="match_parent"
         android:choiceMode="singleChoice"
         android:layout_gravity="start"
-        app:headerLayout="@layout/navigation_header"
         app:menu="@menu/left_nav_menu">
     </android.support.design.widget.NavigationView>
 
