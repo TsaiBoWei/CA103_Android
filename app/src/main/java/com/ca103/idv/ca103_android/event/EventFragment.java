@@ -99,7 +99,7 @@ public class EventFragment extends Fragment {
                 super(itemView);
                 ivEventLogo = itemView.findViewById(R.id.ivEventLogo);
                 tvEventStartDate = itemView.findViewById((R.id.tvEventStartDate));
-                tvEventTitle = itemView.findViewById(R.id.tvEventTitle);
+                tvEventTitle = itemView.findViewById(R.id.tvPlanTitle);
 
             }
         }

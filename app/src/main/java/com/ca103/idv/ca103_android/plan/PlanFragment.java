@@ -1,11 +1,8 @@
 package com.ca103.idv.ca103_android.plan;
 
-import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -15,9 +12,7 @@ import android.widget.CalendarView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-
 import com.ca103.idv.ca103_android.R;
-
 import com.ca103.idv.ca103_android.event.EventVO;
 import com.ca103.idv.ca103_android.main.Util;
 import com.ca103.idv.ca103_android.main.task.CommonTask;
@@ -28,17 +23,21 @@ import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class PlanFragment extends Fragment {
-    String url = Util.URL + "/PlanAndroidServlet.do";
+    String url = Util.URL + "/PlanAndroidServlet";
     CommonTask planTask;
     CalendarView calenderView;
     RecyclerView recyclerView;
     List<PlanVO> planlist;
     List<EventVO> eventlist;
+    List<ThingsVO> stuffs;
 
+    PlanAdapter planAdapter;
     Gson gson ;
 
     @Override
@@ -51,11 +50,15 @@ public class PlanFragment extends Fragment {
         gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
 
         getLists();
-        List<ThingsVO> stuffs = new ArrayList<ThingsVO>();
+        stuffs = new ArrayList<ThingsVO>();
 
         recyclerView = view.findViewById(R.id.recyclerViewPlan);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
+
+        setThingsToday();
+        planAdapter = new PlanAdapter(stuffs);
+        recyclerView.setAdapter( planAdapter );
 
 
         // 設定calenderView點擊事件
@@ -63,24 +66,43 @@ public class PlanFragment extends Fragment {
         calenderView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
-                Util.showToast(view.getContext(), "month" + month + "day" + dayOfMonth);
                 // 雖然是已廢棄的方法
                 // 但是可以用就好了
-                Timestamp date = new java.sql.Timestamp(year,month,dayOfMonth,0,0,0,0);
+                Timestamp date = new java.sql.Timestamp(2018,month,dayOfMonth,0,0,0,0);
 
-                for ( PlanVO pvo : planlist ) {
-                    if ( pvo.getPlan_start_date().before(date) && pvo.getPlan_end_date().after(date) ) {
-                    }
+                SimpleDateFormat smd = new SimpleDateFormat("yyyy-MM-dd");
 
+                String input = year + "-" + ++month + "-" + dayOfMonth;
+
+                Date t = new Date(System.currentTimeMillis());
+
+                try {
+                    t = smd.parse(input);
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
 
-                //planlist.get(0).getPlan_start_date();
+                date = new Timestamp(t.getTime());
+                stuffs.clear();
+                List<ThingsVO> new_stuffs =  new ArrayList<ThingsVO>();
+                for ( PlanVO pvo : planlist ) {
+                    if ( pvo.getPlan_start_date().before(date) && pvo.getPlan_end_date().after(date) ) {
+                        new_stuffs.add(new ThingsVO(pvo.getPlan_name(), pvo.getPlan_start_date(),
+                                    pvo.getPlan_end_date(), pvo.getPlan_vo()));
+                    }
+                }
 
+                for ( EventVO evo : eventlist ) {
+                    if ( evo.getEve_startdate().before(date) && evo.getEve_enddate().after(date) ) {
+                        new_stuffs.add(new ThingsVO(evo.getEve_title(), evo.getEve_startdate(),
+                                evo.getEve_enddate(), evo.getEve_content()));
+                    }
+                }
+
+                stuffs.addAll(new_stuffs);
+                planAdapter.notifyDataSetChanged();
             }
         });
-
-
-        //recyclerView.setAdapter( new PlanAdapter(stuffs) );
         return view;
     }
 
@@ -119,6 +141,25 @@ public class PlanFragment extends Fragment {
 
     }
 
+    public void setThingsToday() {
+        long time = System.currentTimeMillis();
+        Timestamp date = new Timestamp(time);
+
+        for ( PlanVO pvo : planlist ) {
+            if ( pvo.getPlan_start_date().before(date) && pvo.getPlan_end_date().after(date) ) {
+                stuffs.add(new ThingsVO(pvo.getPlan_name(), pvo.getPlan_start_date(),
+                        pvo.getPlan_end_date(), pvo.getPlan_vo()));
+            }
+        }
+
+        for ( EventVO evo : eventlist ) {
+            if ( evo.getEve_startdate().before(date) && evo.getEve_enddate().after(date) ) {
+                stuffs.add(new ThingsVO(evo.getEve_title(), evo.getEve_startdate(),
+                        evo.getEve_enddate(), evo.getEve_content()));
+            }
+        }
+    }
+
     public class ThingsVO {
         String title;
         Timestamp start_date;
@@ -140,67 +181,46 @@ public class PlanFragment extends Fragment {
     // 還要有card的點擊事件, 透過action轉出該活動/計畫/課程之內容
     private class PlanAdapter extends RecyclerView.Adapter<PlanAdapter.ViewHolder> {
 
-        public List<EventVO> eventList;
+        private List<ThingsVO> mStuffs;
 
-        public PlanAdapter(List<EventVO> list){ this.eventList = list; }
-
-        // 單一card內的viewholder
-        class ViewHolder extends RecyclerView.ViewHolder {
-
-            private ImageView ivEventLogo;
-            private TextView tvEventStartDate;
-            private TextView tvEventTitle;
-            //private WebView wvEventContent;
-
-            public ViewHolder(View itemView) {
-                super(itemView);
-                ivEventLogo = itemView.findViewById(R.id.ivEventLogo);
-                tvEventStartDate = itemView.findViewById((R.id.tvEventStartDate));
-                tvEventTitle = itemView.findViewById(R.id.tvEventTitle);
-
-            }
+        public PlanAdapter(List<ThingsVO> list) {
+            this.mStuffs = list;
         }
 
-        @NonNull
         @Override
         public PlanAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            View itemview = LayoutInflater.from(parent.getContext()).inflate(R.layout.cardview_event, parent,false);
+            View itemview = LayoutInflater.from(parent.getContext()).inflate(R.layout.cardview_plan, parent,false);
             return new PlanAdapter.ViewHolder(itemview);
         }
 
         @Override
         public void onBindViewHolder(@NonNull final PlanAdapter.ViewHolder holder, int position) {
-            final EventVO eventVO = eventList.get(position);
-            holder.tvEventTitle.setText(eventVO.getEve_title());
-            holder.tvEventStartDate.setText(eventVO.getEve_startdate().toString());
+            final ThingsVO thing = mStuffs.get(position);
+            holder.tvPlanTitle.setText(thing.title);
+            holder.tvPlanStartDate.setText(thing.start_date.toString());
 
-            // 設定活動圖片
-            // 須改用ImageTask
-            if ( eventVO.getEve_photo() != null ) {
-                Bitmap decode64 =
-                        BitmapFactory.decodeByteArray(eventVO.getEve_photo(),
-                                0,
-                                eventVO.getEve_photo().length);
-                holder.ivEventLogo.setImageBitmap(decode64);
-            }
-
-            holder.ivEventLogo.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Bundle bundle = new Bundle();
-                    bundle.putString("content", eventVO.getEve_content());
-                    Intent intent = new Intent(getActivity(), com.ca103.idv.ca103_android.event.EventWebVewActivity.class);
-                    intent.putExtras(bundle);
-                    startActivity(intent);
-
-                }
-            });
         }
 
         @Override
         public int getItemCount() {
-            return eventList.size();
+            return mStuffs.size();
+        }
+
+        class ViewHolder extends RecyclerView.ViewHolder {
+            private ImageView ivPlanLogo;
+            private TextView tvPlanStartDate;
+            private TextView tvPlanTitle;
+            //private WebView wvEventContent;
+
+            public ViewHolder(View itemView) {
+                super(itemView);
+                ivPlanLogo = itemView.findViewById(R.id.ivPlanLogo);
+                tvPlanStartDate = itemView.findViewById((R.id.tvPlanStartDate));
+                tvPlanTitle = itemView.findViewById(R.id.tvPlanTitle);
+            }
         }
     }
+
+
 
 }
