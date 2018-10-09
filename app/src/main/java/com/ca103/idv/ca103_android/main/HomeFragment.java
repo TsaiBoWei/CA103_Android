@@ -3,15 +3,23 @@ package com.ca103.idv.ca103_android.main;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TableLayout;
 
 import com.ca103.idv.ca103_android.R;
+import com.ca103.idv.ca103_android.event.EventFragment;
+import com.ca103.idv.ca103_android.plan.PlanFragment;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -27,35 +35,44 @@ public class HomeFragment extends Fragment {
         super.onCreateView(inflater, container, savedInstanceState);
         view = inflater.inflate(R.layout.fragment_home, container, false);
 
+        ViewPager viewPager = view.findViewById(R.id.viewPager);
+        viewPager.setAdapter(new HomeFragmentAdapter(getActivity().getSupportFragmentManager()));
+        TabLayout tabLayout = view.findViewById(R.id.tabLayout);
+        tabLayout.setupWithViewPager(viewPager);
 
         return view;
     }
 
 
 
-    public class HomeFragmentAdapter extends RecyclerView.Adapter<HomeFragmentAdapter.ViewHolder> {
+    public class HomeFragmentAdapter extends FragmentPagerAdapter {
+        List<Page> pageList;
+
+        public HomeFragmentAdapter(FragmentManager fm) {
+            super(fm);
+            pageList = new ArrayList<Page>(){};
+
+            pageList.add(new Page(new EventFragment(), "熱門活動"));
+            // 要改為 PlanListFragment
+            pageList.add(new Page(new PlanFragment(), "熱門計畫"));
+            // 缺一個stream fragment
+            // pageList.add(new Page( new StreamFragment(), "直播頁面"));
+        }
+        @Override
+        public Fragment getItem(int position) {
+            return pageList.get(position).getFragment();
+        }
 
         @Override
-        public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            return null;
+        public int getCount() {
+            return pageList.size();
         }
 
         @Override
-        public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-
+        public CharSequence getPageTitle(int position) {
+            return pageList.get(position).getTitle();
         }
 
-
-        @Override
-        public int getItemCount() {
-            return 0;
-        }
-
-        class ViewHolder extends RecyclerView.ViewHolder {
-            public ViewHolder( View itemView ) {
-                super(itemView);
-            }
-        }
     }
 
 }
