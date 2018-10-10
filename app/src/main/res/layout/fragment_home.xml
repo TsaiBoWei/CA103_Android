@@ -15,26 +15,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:tabGravity="fill"
-            app:tabIndicatorColor="#000000"
             app:tabIndicatorHeight="5dp"
+            app:tabIndicatorColor="#000000"
+            app:tabTextColor="#FFFFFF"
             app:tabMaxWidth="0dp"
             app:tabMode="fixed" />
 
     </android.support.design.widget.AppBarLayout>
-
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/floatingActionButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="63dp"
-        android:layout_marginEnd="43dp"
-        android:clickable="true"
-        android:focusable="true"
-        app:layout_anchor="@+id/viewPager"
-        app:layout_anchorGravity="right|bottom"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@android:drawable/ic_menu_slideshow" />
 
     <android.support.v4.view.ViewPager
         android:id="@+id/viewPager"

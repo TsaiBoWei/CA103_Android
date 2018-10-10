@@ -23,6 +23,7 @@ import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
 import java.sql.Timestamp;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -56,7 +57,7 @@ public class PlanFragment extends Fragment {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
 
-        setThingsToday();
+        setByDay( System.currentTimeMillis() );
         planAdapter = new PlanAdapter(stuffs);
         recyclerView.setAdapter( planAdapter );
 
@@ -71,35 +72,16 @@ public class PlanFragment extends Fragment {
                 Timestamp date = new java.sql.Timestamp(2018,month,dayOfMonth,0,0,0,0);
 
                 SimpleDateFormat smd = new SimpleDateFormat("yyyy-MM-dd");
-
                 String input = year + "-" + ++month + "-" + dayOfMonth;
-
                 Date t = new Date(System.currentTimeMillis());
-
                 try {
                     t = smd.parse(input);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-
-                date = new Timestamp(t.getTime());
+                long timemils = t.getTime();
                 stuffs.clear();
-                List<ThingsVO> new_stuffs =  new ArrayList<ThingsVO>();
-                for ( PlanVO pvo : planlist ) {
-                    if ( pvo.getPlan_start_date().before(date) && pvo.getPlan_end_date().after(date) ) {
-                        new_stuffs.add(new ThingsVO(pvo.getPlan_name(), pvo.getPlan_start_date(),
-                                    pvo.getPlan_end_date(), pvo.getPlan_vo()));
-                    }
-                }
-
-                for ( EventVO evo : eventlist ) {
-                    if ( evo.getEve_startdate().before(date) && evo.getEve_enddate().after(date) ) {
-                        new_stuffs.add(new ThingsVO(evo.getEve_title(), evo.getEve_startdate(),
-                                evo.getEve_enddate(), evo.getEve_content()));
-                    }
-                }
-
-                stuffs.addAll(new_stuffs);
+                setByDay(timemils);
                 planAdapter.notifyDataSetChanged();
             }
         });
@@ -141,23 +123,40 @@ public class PlanFragment extends Fragment {
 
     }
 
-    public void setThingsToday() {
-        long time = System.currentTimeMillis();
-        Timestamp date = new Timestamp(time);
+    public void setByDay(long input_time ) {
+
+        Timestamp date = new Timestamp(input_time);
+
+        List<ThingsVO> new_stuffs =  new ArrayList<ThingsVO>();
+        DateFormat dayformat = DateFormat.getDateInstance();
+
+        String get_day = dayformat.format(input_time);
 
         for ( PlanVO pvo : planlist ) {
-            if ( pvo.getPlan_start_date().before(date) && pvo.getPlan_end_date().after(date) ) {
-                stuffs.add(new ThingsVO(pvo.getPlan_name(), pvo.getPlan_start_date(),
+            // 如果開始日在今天之前或正好今天, 且 結束日在今天之後或正好今天
+            if ( ( pvo.getPlan_start_date().before(date) ||
+                    get_day.equals(dayformat.format(pvo.getPlan_start_date())) )
+                    && ( pvo.getPlan_end_date().after(date) ||
+                    get_day.equals(dayformat.format(pvo.getPlan_end_date())))) {
+
+                new_stuffs.add(new ThingsVO(pvo.getPlan_name(), pvo.getPlan_start_date(),
                         pvo.getPlan_end_date(), pvo.getPlan_vo()));
             }
         }
 
         for ( EventVO evo : eventlist ) {
-            if ( evo.getEve_startdate().before(date) && evo.getEve_enddate().after(date) ) {
-                stuffs.add(new ThingsVO(evo.getEve_title(), evo.getEve_startdate(),
+            if ( (evo.getEve_startdate().before(date) ||
+                    get_day.equals(dayformat.format(evo.getEve_startdate())))
+                    && ( evo.getEve_enddate().after(date) ||
+                    get_day.equals(dayformat.format(evo.getEve_enddate())))) {
+
+
+                new_stuffs.add(new ThingsVO(evo.getEve_title(), evo.getEve_startdate(),
                         evo.getEve_enddate(), evo.getEve_content()));
             }
         }
+
+        stuffs.addAll(new_stuffs);
     }
 
     public class ThingsVO {

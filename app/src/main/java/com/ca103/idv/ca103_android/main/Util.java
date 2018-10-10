@@ -2,21 +2,14 @@ package com.ca103.idv.ca103_android.main;
 
 
 import android.app.Activity;
-import android.support.v4.app.Fragment;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.support.v4.app.Fragment;
 import android.widget.Toast;
 
-import com.ca103.idv.ca103_android.R;
-import com.ca103.idv.ca103_android.member.LoginActivity;
 import com.ca103.idv.ca103_android.member.MemVO;
 
-//import idv.david.bookstoreandroid.R;
-//import idv.david.bookstoreandroid.book.BookActivity;
-//import idv.david.bookstoreandroid.member.MemberShipActivity;
-//import idv.david.bookstoreandroid.order.CartActivity;
-//import idv.david.bookstoreandroid.order.OrderBook;
 
 public class Util {
     // 模擬器連Tomcat
@@ -34,7 +27,7 @@ public class Util {
 
     // 功能分類
     public final static Page[] PAGES = {
-            new Page(0,"Login", R.drawable.ic_login, LoginActivity.class)
+            //          new Page(0,"Login", R.drawable.ic_login, LoginActivity.class)
 //            new Page(0, "Book", R.drawable.books, BookActivity.class),
 //            new Page(1, "Order", R.drawable.cart_empty, CartActivity.class),
 //            new Page(2, "Member", R.drawable.user, MemberShipActivity.class),

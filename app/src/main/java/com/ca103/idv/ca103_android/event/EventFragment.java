@@ -1,8 +1,6 @@
 package com.ca103.idv.ca103_android.event;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -19,12 +17,15 @@ import android.widget.TextView;
 import com.ca103.idv.ca103_android.R;
 import com.ca103.idv.ca103_android.main.Util;
 import com.ca103.idv.ca103_android.main.task.CommonTask;
+import com.ca103.idv.ca103_android.main.task.ImageTask;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
+import java.text.DateFormat;
+import java.util.Date;
 import java.util.List;
 
 public class EventFragment extends Fragment {
@@ -100,7 +101,6 @@ public class EventFragment extends Fragment {
                 ivEventLogo = itemView.findViewById(R.id.ivEventLogo);
                 tvEventStartDate = itemView.findViewById((R.id.tvEventStartDate));
                 tvEventTitle = itemView.findViewById(R.id.tvPlanTitle);
-
             }
         }
 
@@ -114,32 +114,37 @@ public class EventFragment extends Fragment {
         @Override
         public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
             final EventVO eventVO = eventList.get(position);
+
             holder.tvEventTitle.setText(eventVO.getEve_title());
-            holder.tvEventStartDate.setText(eventVO.getEve_startdate().toString());
+            DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.MEDIUM);
+            Date a;
+            try {
+                a = dateFormat.parse(dateFormat.format(eventVO.getEve_startdate()));
+
+            }catch (Exception e) {
+                e.printStackTrace();
+            }
+
+
+            holder.tvEventStartDate.setText(dateFormat.format(eventVO.getEve_startdate()));
+
 
             // 設定活動圖片
             // 須改用ImageTask
-            if ( eventVO.getEve_photo() != null ) {
-                Bitmap decode64 =
-                        BitmapFactory.decodeByteArray(eventVO.getEve_photo(),
-                                0,
-                                eventVO.getEve_photo().length);
-                holder.ivEventLogo.setImageBitmap(decode64);
-            }
+            int imageSize = getResources().getDisplayMetrics().widthPixels / 4;
+            ImageTask evePhotoTask = new ImageTask(Util.URL+TAG, eventVO.getEve_id(),
+                    imageSize, holder.ivEventLogo);
+            evePhotoTask.execute();
 
-            // 設定活動內容
-//            if (eventVO.getEve_content()!=null ) {
-//                holder.wvEventContent.loadDataWithBaseURL
-//                (null, eventVO.getEve_content(), "text/html", "utf-8", null);
-//
-//                holder.wvEventContent.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//                        Util.showToast(getActivity(),"is clicked");
-//                    }
-//                });
-//
+//            Bitmap result;
+//            if ( eventVO.getEve_photo() != null ) {
+//                Bitmap decode64 =
+//                        BitmapFactory.decodeByteArray(eventVO.getEve_photo(),
+//                                0,
+//                                eventVO.getEve_photo().length);
+//                holder.ivEventLogo.setImageBitmap(decode64);
 //            }
+
             holder.ivEventLogo.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

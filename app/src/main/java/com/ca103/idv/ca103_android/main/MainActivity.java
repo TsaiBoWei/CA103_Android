@@ -113,7 +113,7 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.left_nav_home:
                         fragment = new HomeFragment();
                         switchFragment(fragment);
-                        setTitle("首頁");
+                        setTitle(R.string.text_Home);
                         break;
                     case R.id.left_nav_profile:
                         fragment = new ProfileFragment();
