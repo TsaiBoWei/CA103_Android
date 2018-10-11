@@ -30,7 +30,7 @@ public class HomeFragment extends Fragment {
 
         ViewPager viewPager = view.findViewById(R.id.viewPager);
         viewPager.setAdapter(new HomeFragmentAdapter(getActivity().getSupportFragmentManager()));
-        TabLayout tabLayout = view.findViewById(R.id.tabLayout);
+        TabLayout tabLayout = view.findViewById(R.id.tablayoutMyCour);
         tabLayout.setupWithViewPager(viewPager);
 
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {

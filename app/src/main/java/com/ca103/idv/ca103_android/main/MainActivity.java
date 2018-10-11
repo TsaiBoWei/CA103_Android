@@ -143,7 +143,6 @@ public class MainActivity extends AppCompatActivity {
                         initBody();
                         break;
                 }
-
                 Util.fragment = fragment;
                 return true;
             }
