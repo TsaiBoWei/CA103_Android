@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">CA103_Android</string>
+    <string name="app_name">Work_Out_Together</string>
 
     <string name="text_left_nav_profile">動態</string>
     <string name="text_left_nav_myevent">我的活動</string>

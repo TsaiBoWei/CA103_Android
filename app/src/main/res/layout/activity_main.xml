@@ -11,7 +11,8 @@
     <FrameLayout
         android:id="@+id/body"
         android:layout_width="match_parent"
-        android:layout_height="300dp" />
+        android:layout_height="300dp"
+        android:background="@color/cardview_dark_background"/>
 
 
 
@@ -22,6 +23,7 @@
         android:layout_height="match_parent"
         android:choiceMode="singleChoice"
         android:layout_gravity="start"
+        android:background=""
         app:menu="@menu/left_nav_menu">
     </android.support.design.widget.NavigationView>
 

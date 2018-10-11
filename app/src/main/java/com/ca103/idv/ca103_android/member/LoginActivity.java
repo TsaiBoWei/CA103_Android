@@ -1,10 +1,12 @@
 package com.ca103.idv.ca103_android.member;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -21,6 +23,10 @@ public class LoginActivity extends AppCompatActivity {
     private CommonTask isMemberTask;
     private Gson gson;
 
+    EditText etUser;
+    EditText etPassword;
+    Button btnLogin;
+    Button btnSignIn;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,6 +34,14 @@ public class LoginActivity extends AppCompatActivity {
         tvMessage = findViewById(R.id.tvMessage);
         gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
         setResult(RESULT_CANCELED);
+        initBody();
+    }
+
+    public void initBody() {
+        etUser = findViewById(R.id.etUser);
+        etPassword = findViewById(R.id.etPassword);
+        btnLogin = findViewById(R.id.btnLogin);
+        btnSignIn = findViewById(R.id.btnSignIn);
     }
 
     @Override
@@ -51,21 +65,19 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void onLoginClick(View view) {
-        EditText etUser = findViewById(R.id.etUser);
-        EditText etPassword = findViewById(R.id.etPassword);
-        String userId = etUser.getText().toString().trim();
+        String account = etUser.getText().toString().trim();
         String password = etPassword.getText().toString().trim();
-        if (userId.length() <= 0 || password.length() <= 0) {
+        if (account.length() <= 0 || password.length() <= 0) {
             showMessage(R.string.msg_InvalidUserOrPassword);
             return;
         }
 
         //Util.showToast(this,"first part done");
-        if (isMember(userId, password)) {
+        if (isMember(account, password)) {
             SharedPreferences preferences = getSharedPreferences(
                     Util.PREF_FILE, MODE_PRIVATE);
             preferences.edit().putBoolean("login", true)
-                    .putString("account", userId)
+                    .putString("account", account)
                     .putString("password", password).apply();
             setResult(RESULT_OK);
             finish();
@@ -115,12 +127,42 @@ public class LoginActivity extends AppCompatActivity {
         }
         return isMember;
     }
-
     @Override
     protected void onStop() {
         super.onStop();
         if (isMemberTask != null) {
             isMemberTask.cancel(true);
+        }
+    }
+
+
+    public void onSigninCLick(View view) {
+        Intent signin = new Intent(this, SigninActivity.class);
+        startActivityForResult(signin, Util.REQ_LOGIN);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if ( resultCode == RESULT_OK ) {
+            switch(requestCode) {
+                case Util.REQ_SIGNIN :
+                    String account = data.getStringExtra("account");
+                    String password = data.getStringExtra("password");
+                    if (isMember(account, password)) {
+                        SharedPreferences preferences = getSharedPreferences(
+                                Util.PREF_FILE, MODE_PRIVATE);
+                        preferences.edit().putBoolean("login", true)
+                                .putString("account", account)
+                                .putString("password", password).apply();
+                        setResult(RESULT_OK);
+                        finish();
+                        return;
+                    } else {
+                        showMessage(R.string.msg_InvalidUserOrPassword);
+                    }
+                    break;
+            }
         }
     }
 }

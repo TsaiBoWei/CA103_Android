@@ -2,5 +2,6 @@
 <resources>
 
     <dimen name="card_post_bottom_button_dimen">11dp</dimen>
+    <dimen name="text_box_size">200dp</dimen>
 
 </resources>
