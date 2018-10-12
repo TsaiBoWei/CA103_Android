@@ -25,6 +25,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.ca103.idv.ca103_android.R;
+import com.ca103.idv.ca103_android.course.CourseFragment;
 import com.ca103.idv.ca103_android.event.EventFragment;
 import com.ca103.idv.ca103_android.member.LoginActivity;
 import com.ca103.idv.ca103_android.member.ProfileFragment;
@@ -134,6 +135,8 @@ public class MainActivity extends AppCompatActivity {
                         setTitle("計畫");
                         break;
                     case R.id.left_nav_course:
+                        fragment = new CourseFragment();
+                        switchFragment(fragment);
                         setTitle("課程");
                         break;
                     case R.id.logout:

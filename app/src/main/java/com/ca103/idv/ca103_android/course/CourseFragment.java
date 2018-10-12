@@ -26,9 +26,9 @@ public class CourseFragment extends android.support.v4.app.Fragment{
                              Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         View view = inflater.inflate(R.layout.fragment_course, container, false);
+        findViews(view);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
         recyclerviewCour.setLayoutManager(layoutManager);
-        findViews(view);
         return view;
     }
 

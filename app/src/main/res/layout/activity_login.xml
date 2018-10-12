@@ -62,9 +62,8 @@
         android:layout_marginStart="0dp"
         android:layout_marginTop="0dp"
         android:background="@color/cardview_dark_background"
-        app:srcCompat="@drawable/cover_run"
         android:radius="10dp"
-        />
+        app:srcCompat="@drawable/cover_workout" />
 
     <Button
         android:id="@+id/btnLogin"
