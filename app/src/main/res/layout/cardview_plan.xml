@@ -19,21 +19,6 @@
         android:layout_height="match_parent"
         android:padding="5dp">
 
-        <ImageView
-            android:id="@+id/ivPlanLogo"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_centerInParent="true"
-            android:layout_marginBottom="25dp"
-            android:layout_marginEnd="5dp"
-            android:layout_marginStart="5dp"
-            android:layout_marginTop="5dp"
-            android:scaleType="centerCrop"
-            card_view:layout_constraintBottom_toTopOf="@+id/tvPlanStartDate"
-            card_view:layout_constraintEnd_toEndOf="parent"
-            card_view:layout_constraintStart_toStartOf="parent"
-            card_view:layout_constraintTop_toTopOf="parent" />
-
         <TextView
             android:id="@+id/tvPlanStartDate"
             android:layout_width="wrap_content"
@@ -41,11 +26,11 @@
             android:layout_above="@+id/tvPlanTitle"
             android:layout_alignParentStart="true"
             android:text="testdate"
+            android:textColor="@color/home_page_tool_bar_bg"
             android:layout_marginBottom="2dp"
             android:layout_marginStart="15dp"
             card_view:layout_constraintBottom_toTopOf="@+id/tvPlanTitle"
-            card_view:layout_constraintStart_toStartOf="parent"
-            card_view:layout_constraintTop_toBottomOf="@+id/ivPlanLogo" />
+            card_view:layout_constraintStart_toStartOf="parent" />
 
         <TextView
             android:id="@+id/tvPlanTitle"
@@ -55,6 +40,7 @@
             android:layout_alignParentStart="true"
             android:layout_marginBottom="15dp"
             android:layout_marginStart="15dp"
+            android:textColor="@color/home_page_tool_bar_bg"
             android:text="testtitle"
             android:textSize="20sp"
             card_view:layout_constraintStart_toEndOf="@+id/tvPlanStartDate"

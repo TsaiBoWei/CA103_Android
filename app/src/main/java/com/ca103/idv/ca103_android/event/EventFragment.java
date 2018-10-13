@@ -136,15 +136,6 @@ public class EventFragment extends Fragment {
                     imageSize, holder.ivEventLogo);
             evePhotoTask.execute();
 
-//            Bitmap result;
-//            if ( eventVO.getEve_photo() != null ) {
-//                Bitmap decode64 =
-//                        BitmapFactory.decodeByteArray(eventVO.getEve_photo(),
-//                                0,
-//                                eventVO.getEve_photo().length);
-//                holder.ivEventLogo.setImageBitmap(decode64);
-//            }
-
             holder.ivEventLogo.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

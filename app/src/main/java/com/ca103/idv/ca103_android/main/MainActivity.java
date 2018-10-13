@@ -127,17 +127,17 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.left_nav_myevent:
                         fragment = new EventFragment();
                         switchFragment(fragment);
-                        setTitle("活動");
+                        setTitle("我的活動");
                         break;
                     case  R.id.left_nav_myplan:
                         fragment = new PlanFragment();
                         switchFragment(fragment);
-                        setTitle("計畫");
+                        setTitle("我的計畫");
                         break;
                     case R.id.left_nav_course:
                         fragment = new CourseFragment();
                         switchFragment(fragment);
-                        setTitle("課程");
+                        setTitle("我的課程");
                         break;
                     case R.id.logout:
                         logout();

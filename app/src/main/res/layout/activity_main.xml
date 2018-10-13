@@ -11,10 +11,7 @@
     <FrameLayout
         android:id="@+id/body"
         android:layout_width="match_parent"
-        android:layout_height="300dp"
-        android:background="@color/cardview_dark_background"/>
-
-
+        android:layout_height="300dp"/>
 
     <!-- the navigation drawer -->
     <android.support.design.widget.NavigationView

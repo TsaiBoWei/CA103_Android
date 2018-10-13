@@ -1,15 +1,17 @@
 package com.ca103.idv.ca103_android.plan;
 
+import android.annotation.SuppressLint;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CalendarView;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.ca103.idv.ca103_android.R;
@@ -41,6 +43,7 @@ public class PlanFragment extends Fragment {
     PlanAdapter planAdapter;
     Gson gson ;
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -65,13 +68,11 @@ public class PlanFragment extends Fragment {
         // 設定calenderView點擊事件
         calenderView = view.findViewById(R.id.calendarView);
         calenderView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
+            @SuppressLint("SimpleDateFormat")
             @Override
             public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
-                // 雖然是已廢棄的方法
-                // 但是可以用就好了
-                Timestamp date = new java.sql.Timestamp(2018,month,dayOfMonth,0,0,0,0);
-
-                SimpleDateFormat smd = new SimpleDateFormat("yyyy-MM-dd");
+                SimpleDateFormat smd;
+                smd = new SimpleDateFormat("yyyy-MM-dd");
                 String input = year + "-" + ++month + "-" + dayOfMonth;
                 Date t = new Date(System.currentTimeMillis());
                 try {
@@ -79,9 +80,9 @@ public class PlanFragment extends Fragment {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                long timemils = t.getTime();
+                long get_clicked_dat = t.getTime();
                 stuffs.clear();
-                setByDay(timemils);
+                setByDay(get_clicked_dat);
                 planAdapter.notifyDataSetChanged();
             }
         });
@@ -127,7 +128,7 @@ public class PlanFragment extends Fragment {
 
         Timestamp date = new Timestamp(input_time);
 
-        List<ThingsVO> new_stuffs =  new ArrayList<ThingsVO>();
+        List<ThingsVO> new_stuffs = new ArrayList<>();
         DateFormat dayformat = DateFormat.getDateInstance();
 
         String get_day = dayformat.format(input_time);
@@ -139,8 +140,8 @@ public class PlanFragment extends Fragment {
                     && ( pvo.getPlan_end_date().after(date) ||
                     get_day.equals(dayformat.format(pvo.getPlan_end_date())))) {
 
-                new_stuffs.add(new ThingsVO(pvo.getPlan_name(), pvo.getPlan_start_date(),
-                        pvo.getPlan_end_date(), pvo.getPlan_vo()));
+                new_stuffs.add(new ThingsVO(pvo.getPlan_name(), "plan", pvo.getPlan_id(), pvo.getPlan_start_date(),
+                        pvo.getPlan_end_date()));
             }
         }
 
@@ -150,9 +151,8 @@ public class PlanFragment extends Fragment {
                     && ( evo.getEve_enddate().after(date) ||
                     get_day.equals(dayformat.format(evo.getEve_enddate())))) {
 
-
-                new_stuffs.add(new ThingsVO(evo.getEve_title(), evo.getEve_startdate(),
-                        evo.getEve_enddate(), evo.getEve_content()));
+                new_stuffs.add(new ThingsVO(evo.getEve_title(), "event", evo.getEve_id(), evo.getEve_startdate(),
+                        evo.getEve_enddate()));
             }
         }
 
@@ -161,15 +161,17 @@ public class PlanFragment extends Fragment {
 
     public class ThingsVO {
         String title;
+        String type;
+        String id;
         Timestamp start_date;
         Timestamp end_date;
-        String content;
 
-        public ThingsVO( String title, Timestamp start, Timestamp end, String content ){
+        private ThingsVO(String title, String type, String id, Timestamp start, Timestamp end){
             this.title=title;
+            this.type = type;
+            this.id = id;
             this.start_date = start;
             this.end_date = end;
-            this.content = content;
         }
 
     }
@@ -182,10 +184,11 @@ public class PlanFragment extends Fragment {
 
         private List<ThingsVO> mStuffs;
 
-        public PlanAdapter(List<ThingsVO> list) {
+        private PlanAdapter(List<ThingsVO> list) {
             this.mStuffs = list;
         }
 
+        @NonNull
         @Override
         public PlanAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
             View itemview = LayoutInflater.from(parent.getContext()).inflate(R.layout.cardview_plan, parent,false);
@@ -198,6 +201,12 @@ public class PlanFragment extends Fragment {
             holder.tvPlanTitle.setText(thing.title);
             holder.tvPlanStartDate.setText(thing.start_date.toString());
 
+            if ( "plan".equals(thing.type) ) {
+                holder.cardview_plan.setCardBackgroundColor(getResources().getColor(R.color.card_planpage_plan_color));
+            } else if ("event".equals(thing.type) ) {
+                holder.cardview_plan.setCardBackgroundColor(getResources().getColor(R.color.card_planpage_event_color));
+            }
+
         }
 
         @Override
@@ -206,16 +215,15 @@ public class PlanFragment extends Fragment {
         }
 
         class ViewHolder extends RecyclerView.ViewHolder {
-            private ImageView ivPlanLogo;
+            private CardView cardview_plan;
             private TextView tvPlanStartDate;
             private TextView tvPlanTitle;
-            //private WebView wvEventContent;
 
-            public ViewHolder(View itemView) {
+            private ViewHolder(View itemView) {
                 super(itemView);
-                ivPlanLogo = itemView.findViewById(R.id.ivPlanLogo);
                 tvPlanStartDate = itemView.findViewById((R.id.tvPlanStartDate));
                 tvPlanTitle = itemView.findViewById(R.id.tvPlanTitle);
+                cardview_plan = itemView.findViewById(R.id.cardview_plan);
             }
         }
     }

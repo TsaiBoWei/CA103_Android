@@ -32,6 +32,8 @@
         <activity android:name=".event.EventWebVewActivity"
             android:launchMode="singleTop"/>
 
+        <activity android:name=".course.SingleCourlistActivity"/>
+        <activity android:name=".main.VideoActivity"/>
     </application>
 
 </manifest>

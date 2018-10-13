@@ -5,4 +5,7 @@
     <color name="colorAccent">#ff4081</color>
     <color name="home_page_tool_bar_bg">#FFFFFF</color>
     <color name="home_page_tool_bar_button">#1d4a93</color>
+
+    <color name="card_planpage_plan_color">#F4426e</color>
+    <color name="card_planpage_event_color">#3F51B5</color>
 </resources>
