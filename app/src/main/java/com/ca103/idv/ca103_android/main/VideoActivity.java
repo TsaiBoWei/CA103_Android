@@ -21,9 +21,11 @@ public class VideoActivity extends AppCompatActivity {
         String cour_unit_id = bundle.getString("cour_unit_id");
 
         VideoView vv = findViewById(R.id.videoview);
+        vv.setVideoPath( url+"?cour_unit_id=" + cour_unit_id);
+
         MediaController controller = new MediaController(this);
         vv.setMediaController(controller);
-        vv.setVideoPath( url+"?cour_unit_id=" + cour_unit_id);
+
         vv.start();
     }
 }

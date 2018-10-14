@@ -22,6 +22,8 @@ public class ImageTask extends AsyncTask<Object, Integer, Bitmap> {
     private final static String TAG = "ImageTask";
     private String url, id;
     private int imageSize;
+    public int result;
+
     /* ImageTask的屬性strong reference到BookListAdapter內的imageView不好，
      * 會導致BookListAdapter進入背景時imageView被參考到而無法被釋放，
      * 而且imageView會參考到Context，也會導致Activity無法被回收。
@@ -38,6 +40,7 @@ public class ImageTask extends AsyncTask<Object, Integer, Bitmap> {
         this.id = id;
         this.imageSize = imageSize;
         this.imageViewWeakReference = new WeakReference<>(imageView);
+        this.result = 0 ;
     }
 
 
@@ -82,6 +85,7 @@ public class ImageTask extends AsyncTask<Object, Integer, Bitmap> {
             if (responseCode == 200) {
                 bitmap = BitmapFactory.decodeStream(new BufferedInputStream(connection.getInputStream()));
             } else {
+                this.result = 500;
                 Log.d(TAG, "response code: " + responseCode);
             }
         } catch (IOException e) {

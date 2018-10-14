@@ -28,7 +28,6 @@ import com.ca103.idv.ca103_android.R;
 import com.ca103.idv.ca103_android.course.CourseFragment;
 import com.ca103.idv.ca103_android.event.EventFragment;
 import com.ca103.idv.ca103_android.member.LoginActivity;
-import com.ca103.idv.ca103_android.member.ProfileFragment;
 import com.ca103.idv.ca103_android.plan.PlanFragment;
 
 public class MainActivity extends AppCompatActivity {
@@ -116,14 +115,14 @@ public class MainActivity extends AppCompatActivity {
                         switchFragment(fragment);
                         setTitle(R.string.text_Home);
                         break;
-                    case R.id.left_nav_profile:
-                        fragment = new ProfileFragment();
-                        bundle = new Bundle();
-                        bundle.putString("mem_id", Util.memVO.getMem_id());
-                        fragment.setArguments(bundle);
-                        switchFragment(fragment);
-                        setTitle("個人頁");
-                        break;
+//                    case R.id.left_nav_profile:
+//                        fragment = new ProfileFragment();
+//                        bundle = new Bundle();
+//                        bundle.putString("mem_id", Util.memVO.getMem_id());
+//                        fragment.setArguments(bundle);
+//                        switchFragment(fragment);
+//                        setTitle("個人頁");
+//                        break;
                     case R.id.left_nav_myevent:
                         fragment = new EventFragment();
                         switchFragment(fragment);

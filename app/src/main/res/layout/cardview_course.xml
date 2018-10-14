@@ -8,7 +8,7 @@
 
     android:layout_margin="6dp"
     android:padding="6dp"
-    android:id="@+id/cardview_event"
+    android:id="@+id/cardview_course"
     android:orientation="horizontal"
     card_view:cardCornerRadius="4dp"
     card_view:cardElevation="6dp"
@@ -20,7 +20,7 @@
         android:padding="5dp">
 
         <ImageView
-            android:id="@+id/ivEventLogo"
+            android:id="@+id/ivCourLogo"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_centerInParent="true"
@@ -42,7 +42,7 @@
             android:text="test"
             card_view:layout_constraintBottom_toTopOf="@+id/tvCourName"
             card_view:layout_constraintStart_toStartOf="parent"
-            card_view:layout_constraintTop_toBottomOf="@+id/ivEventLogo" />
+            card_view:layout_constraintTop_toBottomOf="@+id/ivCourLogo" />
 
         <TextView
             android:id="@+id/tvCourName"
@@ -56,6 +56,16 @@
             android:text="testttitle"
             card_view:layout_constraintStart_toEndOf="@+id/tvCourPrice"
             card_view:layout_constraintTop_toBottomOf="@+id/tvCourPrice" />
+
+        <Button
+            android:id="@+id/btnBuy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="55dp"
+            android:layout_marginEnd="9dp"
+            android:text="BUY!" />
 
 
     </RelativeLayout>

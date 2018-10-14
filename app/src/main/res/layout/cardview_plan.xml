@@ -23,17 +23,17 @@
             android:id="@+id/tvPlanStartDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_above="@+id/tvPlanTitle"
+            android:layout_above="@+id/tvCourName"
             android:layout_alignParentStart="true"
             android:text="testdate"
             android:textColor="@color/home_page_tool_bar_bg"
             android:layout_marginBottom="2dp"
             android:layout_marginStart="15dp"
-            card_view:layout_constraintBottom_toTopOf="@+id/tvPlanTitle"
+            card_view:layout_constraintBottom_toTopOf="@+id/tvCourName"
             card_view:layout_constraintStart_toStartOf="parent" />
 
         <TextView
-            android:id="@+id/tvPlanTitle"
+            android:id="@+id/tvCourName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"

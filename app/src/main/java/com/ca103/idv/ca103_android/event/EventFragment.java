@@ -99,8 +99,8 @@ public class EventFragment extends Fragment {
             public ViewHolder(View itemView) {
                 super(itemView);
                 ivEventLogo = itemView.findViewById(R.id.ivEventLogo);
-                tvEventStartDate = itemView.findViewById((R.id.tvEventStartDate));
-                tvEventTitle = itemView.findViewById(R.id.tvPlanTitle);
+                tvEventStartDate = itemView.findViewById((R.id.tvCourPrice));
+                tvEventTitle = itemView.findViewById(R.id.tvCourName);
             }
         }
 
@@ -135,6 +135,11 @@ public class EventFragment extends Fragment {
             ImageTask evePhotoTask = new ImageTask(Util.URL+TAG, eventVO.getEve_id(),
                     imageSize, holder.ivEventLogo);
             evePhotoTask.execute();
+
+            if ( evePhotoTask.result != 500 ) {
+                holder.tvEventStartDate.setText("");
+                holder.tvEventTitle.setText("");
+            }
 
             holder.ivEventLogo.setOnClickListener(new View.OnClickListener() {
                 @Override

@@ -12,6 +12,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.ca103.idv.ca103_android.R;
+import com.ca103.idv.ca103_android.course.AllCourseFragment;
+import com.ca103.idv.ca103_android.event.EventFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,25 +32,10 @@ public class HomeFragment extends Fragment {
 
         ViewPager viewPager = view.findViewById(R.id.viewPager);
         viewPager.setAdapter(new HomeFragmentAdapter(getActivity().getSupportFragmentManager()));
+
         TabLayout tabLayout = view.findViewById(R.id.tablayoutMyCour);
         tabLayout.setupWithViewPager(viewPager);
-
-        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-
-            }
-
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-
-            }
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-
-            }
-        });
+        tabLayout.getTabAt(1).select();
         return view;
     }
 
@@ -63,12 +50,17 @@ public class HomeFragment extends Fragment {
         public HomeFragmentAdapter(FragmentManager fm) {
             super(fm);
             pageList = new ArrayList<Page>(){};
+            Bundle bundle = new Bundle();
+            bundle.putString("type", "hot");
 
-            //pageList.add(new Page(new EventFragment(), "熱門活動"));
-            // 要改為 PlanListFragment
-            //pageList.add(new Page(new PlanFragment(), "熱門計畫"));
-            // 缺一個stream fragment
-            // pageList.add(new Page( new StreamFragment(), "直播頁面"));
+            EventFragment eventFragment = new EventFragment();
+            eventFragment.setArguments(bundle);
+            pageList.add(new Page(eventFragment, "熱門活動"));
+
+            AllCourseFragment courseFragment = new AllCourseFragment();
+            courseFragment.setArguments(bundle);
+            pageList.add( new Page(courseFragment, "熱門課程"));
+
         }
         @Override
         public Fragment getItem(int position) {

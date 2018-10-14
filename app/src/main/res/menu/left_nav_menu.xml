@@ -8,10 +8,10 @@
             android:icon="@drawable/ic_left_nav_profile_24dp"
             android:title="首頁" />
 
-        <item
-            android:id="@+id/left_nav_profile"
-            android:icon="@drawable/ic_left_nav_profile_24dp"
-            android:title="@string/text_left_nav_profile" />
+        <!--<item-->
+            <!--android:id="@+id/left_nav_profile"-->
+            <!--android:icon="@drawable/ic_left_nav_profile_24dp"-->
+            <!--android:title="@string/text_left_nav_profile" />-->
         <item
             android:id="@+id/left_nav_myevent"
             android:icon="@drawable/ic_event"

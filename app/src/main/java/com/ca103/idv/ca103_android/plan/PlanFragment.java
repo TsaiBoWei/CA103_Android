@@ -1,7 +1,6 @@
 package com.ca103.idv.ca103_android.plan;
 
 import android.annotation.SuppressLint;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -52,6 +51,9 @@ public class PlanFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_plan, container, false);
         // 設定Gson日期物件
         gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
+
+        planlist = new ArrayList<>();
+        eventlist = new ArrayList<>();
 
         getLists();
         stuffs = new ArrayList<ThingsVO>();
@@ -133,29 +135,32 @@ public class PlanFragment extends Fragment {
 
         String get_day = dayformat.format(input_time);
 
-        for ( PlanVO pvo : planlist ) {
-            // 如果開始日在今天之前或正好今天, 且 結束日在今天之後或正好今天
-            if ( ( pvo.getPlan_start_date().before(date) ||
-                    get_day.equals(dayformat.format(pvo.getPlan_start_date())) )
-                    && ( pvo.getPlan_end_date().after(date) ||
-                    get_day.equals(dayformat.format(pvo.getPlan_end_date())))) {
+        if ( planlist != null ) {
+            for (PlanVO pvo : planlist) {
+                // 如果開始日在今天之前或正好今天, 且 結束日在今天之後或正好今天
+                if ((pvo.getPlan_start_date().before(date) ||
+                        get_day.equals(dayformat.format(pvo.getPlan_start_date())))
+                        && (pvo.getPlan_end_date().after(date) ||
+                        get_day.equals(dayformat.format(pvo.getPlan_end_date())))) {
 
-                new_stuffs.add(new ThingsVO(pvo.getPlan_name(), "plan", pvo.getPlan_id(), pvo.getPlan_start_date(),
-                        pvo.getPlan_end_date()));
+                    new_stuffs.add(new ThingsVO(pvo.getPlan_name(), "plan", pvo.getPlan_id(), pvo.getPlan_start_date(),
+                            pvo.getPlan_end_date()));
+                }
             }
         }
 
-        for ( EventVO evo : eventlist ) {
-            if ( (evo.getEve_startdate().before(date) ||
-                    get_day.equals(dayformat.format(evo.getEve_startdate())))
-                    && ( evo.getEve_enddate().after(date) ||
-                    get_day.equals(dayformat.format(evo.getEve_enddate())))) {
+        if ( eventlist != null ) {
+            for (EventVO evo : eventlist) {
+                if ((evo.getEve_startdate().before(date) ||
+                        get_day.equals(dayformat.format(evo.getEve_startdate())))
+                        && (evo.getEve_enddate().after(date) ||
+                        get_day.equals(dayformat.format(evo.getEve_enddate())))) {
 
-                new_stuffs.add(new ThingsVO(evo.getEve_title(), "event", evo.getEve_id(), evo.getEve_startdate(),
-                        evo.getEve_enddate()));
+                    new_stuffs.add(new ThingsVO(evo.getEve_title(), "event", evo.getEve_id(), evo.getEve_startdate(),
+                            evo.getEve_enddate()));
+                }
             }
         }
-
         stuffs.addAll(new_stuffs);
     }
 
@@ -222,7 +227,7 @@ public class PlanFragment extends Fragment {
             private ViewHolder(View itemView) {
                 super(itemView);
                 tvPlanStartDate = itemView.findViewById((R.id.tvPlanStartDate));
-                tvPlanTitle = itemView.findViewById(R.id.tvPlanTitle);
+                tvPlanTitle = itemView.findViewById(R.id.tvCourName);
                 cardview_plan = itemView.findViewById(R.id.cardview_plan);
             }
         }

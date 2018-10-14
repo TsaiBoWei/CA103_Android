@@ -41,6 +41,8 @@ public class CourseFragment extends android.support.v4.app.Fragment{
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
         recyclerviewCour.setLayoutManager(layoutManager);
 
+//        Bundle bundle = getArguments();
+//        String type = bundle.getString("type");
         // 取得已購買清單
         getList();
 
@@ -112,7 +114,7 @@ public class CourseFragment extends android.support.v4.app.Fragment{
             private ViewHolder(View itemView) {
                 super(itemView);
                 tvCost = itemView.findViewById((R.id.tvPlanStartDate));
-                tvCName = itemView.findViewById(R.id.tvPlanTitle);
+                tvCName = itemView.findViewById(R.id.tvCourName);
                 cardview_cour = itemView.findViewById(R.id.cardview_plan);
             }
         }
