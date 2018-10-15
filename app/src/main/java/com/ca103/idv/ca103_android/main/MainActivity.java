@@ -29,6 +29,7 @@ import com.ca103.idv.ca103_android.course.CourseFragment;
 import com.ca103.idv.ca103_android.event.EventFragment;
 import com.ca103.idv.ca103_android.member.LoginActivity;
 import com.ca103.idv.ca103_android.plan.PlanFragment;
+import com.ca103.idv.ca103_android.post.WebviewFragment;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -137,6 +138,11 @@ public class MainActivity extends AppCompatActivity {
                         fragment = new CourseFragment();
                         switchFragment(fragment);
                         setTitle("我的課程");
+                        break;
+
+                    case R.id.left_nav_stream:
+                        fragment = new WebviewFragment();
+                        switchFragment(fragment);
                         break;
                     case R.id.logout:
                         logout();

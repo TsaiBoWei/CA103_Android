@@ -28,8 +28,8 @@
             android:title="@string/text_left_nav_myplan" />
 
         <item
-            android:id="@+id/chat"
-            android:title="聊天"
+            android:id="@+id/left_nav_stream"
+            android:title="觀看直播"
             />
 
         <item

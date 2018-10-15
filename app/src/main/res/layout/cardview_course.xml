@@ -40,6 +40,7 @@
             android:layout_marginBottom="2dp"
             android:textSize="15sp"
             android:text="test"
+            android:textColor="#FFFFFF"
             card_view:layout_constraintBottom_toTopOf="@+id/tvCourName"
             card_view:layout_constraintStart_toStartOf="parent"
             card_view:layout_constraintTop_toBottomOf="@+id/ivCourLogo" />
@@ -54,18 +55,22 @@
             android:layout_marginBottom="15dp"
             android:textSize="30sp"
             android:text="testttitle"
+            android:textColor="#FFFFFF"
             card_view:layout_constraintStart_toEndOf="@+id/tvCourPrice"
             card_view:layout_constraintTop_toBottomOf="@+id/tvCourPrice" />
 
         <Button
             android:id="@+id/btnBuy"
+            style="@style/Widget.AppCompat.Button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
             android:layout_marginTop="55dp"
             android:layout_marginEnd="9dp"
-            android:text="BUY!" />
+            android:background="@color/card_planpage_plan_color"
+            android:text="BUY!"
+            android:textColor="#FFFFFF" />
 
 
     </RelativeLayout>

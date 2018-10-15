@@ -4,9 +4,8 @@ import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,7 +20,6 @@ import java.util.List;
 
 public class HomeFragment extends Fragment {
 
-    private RecyclerView recyclerView;
     private View view;
 
     @Override
@@ -35,7 +33,7 @@ public class HomeFragment extends Fragment {
 
         TabLayout tabLayout = view.findViewById(R.id.tablayoutMyCour);
         tabLayout.setupWithViewPager(viewPager);
-        tabLayout.getTabAt(1).select();
+        tabLayout.getTabAt(0).select();
         return view;
     }
 
@@ -44,7 +42,7 @@ public class HomeFragment extends Fragment {
         super.onResume();
     }
 
-    public class HomeFragmentAdapter extends FragmentPagerAdapter {
+    public class HomeFragmentAdapter extends FragmentStatePagerAdapter {
         List<Page> pageList;
 
         public HomeFragmentAdapter(FragmentManager fm) {

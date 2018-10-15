@@ -151,26 +151,61 @@ public class AllCourseFragment extends Fragment {
             holder.btnBuy.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if ( !buyCour(courlistVO.getCour_id(), Util.memVO.getMem_id() ))  {
-                        new android.support.v7.app.AlertDialog.Builder(getContext())
-                                .setTitle("購買失敗")
-                                .setMessage("你已購買此課程!")
-                                .setPositiveButton("我了解了", new DialogInterface.OnClickListener() {
+                    new android.support.v7.app.AlertDialog.Builder(getContext())
+                                .setTitle("確認訊息")
+                                .setMessage("你確定要購買 " + courlistVO.getCname() + " $" + courlistVO.getCour_cost() + "?"  )
+                                .setPositiveButton("沒錯我就是要買", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        if ( !buyCour(courlistVO.getCour_id(), Util.memVO.getMem_id() ))  {
+                                            new android.support.v7.app.AlertDialog.Builder(getContext())
+                                                    .setTitle("購買失敗")
+                                                    .setMessage("你已購買此課程!")
+                                                    .setPositiveButton("我了解了", new DialogInterface.OnClickListener() {
+                                                        @Override
+                                                        public void onClick(DialogInterface dialog, int which) {
+                                                        }
+                                                    }).show();
+                                        }
+                                        else {
+                                            new android.support.v7.app.AlertDialog.Builder(getContext())
+                                                    .setTitle("購買成功!")
+                                                    .setMessage("謝謝您的惠顧")
+                                                    .setPositiveButton("不用謝我", new DialogInterface.OnClickListener() {
+                                                        @Override
+                                                        public void onClick(DialogInterface dialog, int which) {
+                                                        }
+                                                    }).show();
+                                        }
+                                    }
+                                })
+                                .setNegativeButton("取消購買", new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
                                     }
                                 }).show();
-                    }
-                    else {
-                        new android.support.v7.app.AlertDialog.Builder(getContext())
-                            .setTitle("購買成功!")
-                            .setMessage("謝謝您的惠顧")
-                            .setPositiveButton("不用謝我", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                            }
-                        }).show();
-                    }
+
+
+//                    if ( !buyCour(courlistVO.getCour_id(), Util.memVO.getMem_id() ))  {
+//                        new android.support.v7.app.AlertDialog.Builder(getContext())
+//                                .setTitle("購買失敗")
+//                                .setMessage("你已購買此課程!")
+//                                .setPositiveButton("我了解了", new DialogInterface.OnClickListener() {
+//                                    @Override
+//                                    public void onClick(DialogInterface dialog, int which) {
+//                                    }
+//                                }).show();
+//                    }
+//                    else {
+//                        new android.support.v7.app.AlertDialog.Builder(getContext())
+//                            .setTitle("購買成功!")
+//                            .setMessage("謝謝您的惠顧")
+//                            .setPositiveButton("不用謝我", new DialogInterface.OnClickListener() {
+//                            @Override
+//                            public void onClick(DialogInterface dialog, int which) {
+//                            }
+//                        }).show();
+//                    }
                 }
             });
 
