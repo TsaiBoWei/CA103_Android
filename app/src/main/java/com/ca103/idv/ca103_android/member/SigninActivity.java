@@ -89,6 +89,7 @@ public class SigninActivity extends AppCompatActivity {
             }
         }
         setResult(RESULT_OK);
+        finish();
     }
 
     public void cancelOnclick(View view ) {

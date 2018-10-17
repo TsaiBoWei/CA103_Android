@@ -136,7 +136,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
 
-    public void onSigninCLick(View view) {
+    public void onSigninClick(View view) {
         Intent signin = new Intent(this, SigninActivity.class);
         startActivityForResult(signin, Util.REQ_LOGIN);
     }

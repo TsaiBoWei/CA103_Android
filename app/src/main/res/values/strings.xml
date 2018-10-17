@@ -19,8 +19,8 @@
     <!-- login activity-->
     <string name="text_btnNewAccount">Create a new account</string>
     <string name="text_btnLogin">Login</string>
-    <string name="hint_etUser">User name</string>
-    <string name="hint_etPassword">password</string>
+    <string name="hint_etUser"> User name</string>
+    <string name="hint_etPassword"> Password</string>
     <string name="hint_etUrl">Server URL</string>
 
     <!--error messages-->
